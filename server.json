@@ -1,0 +1,24 @@
+{
+  "domain": "aniwave.to",
+  "domain2": "anix.to",
+  "domain_default": 1,
+
+  "stream_domain": "vidplay.online",
+  "stream_domain1": "vid2a41.site",
+  "stream_domain2": "megaf.cc",
+  "update": "1.1-240624",
+
+  "appnum": 590,
+  "appver": "5.9.0",
+  "appsize": "6.00 MB",
+  "appurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/5.9.0/animetv-5.9.0.apk",
+  "appnote": 
+    "- Tweak subtitles styles\n- Add reverse landscape support on playback\n- Rebuilt streaming backend with Anilili providers\n- UI modernization: rounded corners, glassmorphism",
+  
+  "pcnum": 590,
+  "pcver": "5.9.0",
+  "pcsize": "6.89 MB",
+  "pcurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/5.9.0/animetv-5.9.0.asar.gz",
+  "pcnote": 
+    "- Tweak subtitles styles\n- Add reverse landscape support on playback\n- Rebuilt streaming backend with Anilili providers\n- UI modernization: rounded corners, glassmorphism"
+}

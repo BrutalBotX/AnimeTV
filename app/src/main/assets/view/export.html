@@ -1,0 +1,249 @@
+<html>
+  <head>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+<script>
+function goTo(u){
+  if ('goToUrl' in _JSAPI){
+    _JSAPI.goToUrl(u);
+  }
+  else{
+    location=u;
+  }
+}
+function storeSet(n,v){
+  _JSAPI.storeSet(n,JSON.stringify(v));
+}
+function storeGet(n,v){
+  return JSON.parse(_JSAPI.storeGet(n,JSON.stringify(v)));
+}
+window.onload=function(){
+  const host=location.host;
+  const source_domains=[
+    "aniwave.to",
+    "anix.to",
+    "hianime.to",
+    "aniwatchtv.to",
+    "animeflix.live",
+    "kaas.to",
+    'api.gojo.live'
+  ];
+  var _SD=1;
+  var _UID="";
+  var _SDZ=source_domains.indexOf(host);
+  function special(str){
+    return (str+"").replace(/\&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+  function slugString(Text,rp) {
+    if (rp===undefined || rp===null){
+      rp=' ';
+    }
+    return Text.toLowerCase()
+      .replace(/[^\w]+/g, " ")
+      .replace(/  /g, "  ")
+      .replace(/  /g, " ")
+      .replace(/  /g, " ")
+      .replace(/  /g, " ").trim()
+      .replace(/ /g, rp);
+  }
+  function toInt(x) {
+    var x = parseInt(x);
+    return isNaN(x)?0:x;
+  }
+  function $tick() {
+    var dt = new Date();
+    return dt.getTime();
+  }
+  const list={
+    history:{detail:{},list:[]},
+    fav:{detail:{},list:[]},
+    store_name:function(name){
+      if (_SD==1){
+        return _UID+""+name;
+      }
+      else{
+        return _UID+"_anix_"+name;
+      }
+    },
+    load_storage:function(name){
+      var itm=localStorage.getItem(list.store_name(name));
+      if (itm){
+        var j=JSON.parse(itm);
+        if (('detail' in j)&&('list' in j)){
+          return {detail:j.detail,list:j.list};
+        }
+      }
+      return {detail:{},list:[]};
+    },
+    save:function(o,name){
+      localStorage.setItem(list.store_name(name),JSON.stringify(o));
+    },
+    del:function(o,id){
+      var pos=o.list.indexOf(id);
+      if (pos>=0){
+        o.list.splice(pos,1);
+        delete o.detail[id];
+      }
+    },
+    load:function(){
+      list.history=list.load_storage('list_history');
+      list.fav=list.load_storage('list_fav');
+    }
+  };
+
+  if (_SDZ>=0){
+    _SD =_SDZ+1;
+    _UID=_JSAPI.profileGetPrefix();
+    var _VARNAME=_UID+"export_global_list";
+
+    if (_SD==1){
+      _JSAPI.storeDel(_VARNAME);
+    }
+    list.load();
+
+    // console.log(list.history);
+    // console.log(list.fav);
+    function listing(l,out_d,out_t, exp){
+      for (var i=0;i<l.list.length;i++){
+        var k=l.list[i];
+        if (k in l.detail){
+          var dt=l.detail[k];
+          var vslud=dt.title_jp?dt.title_jp:dt.title;
+          vslud=vslud.replace(/\([^)]*\)/g,'');
+          var ni=slugString(vslud,'');
+          var n="a_"+ni;
+          var val_prog=0;
+          
+          if (!(n in out_d)){
+            out_d[n]={
+              s:[], /* sources */
+              e:{}, /* episode progress */
+              p:dt.ep /* last episode */
+            };
+          }
+          od=out_d[n];
+          if (toInt(od.p)<toInt(dt.ep)){
+            od.p=dt.ep;
+          }
+          if ('play' in dt){
+            if (dt.play[1]>0){
+              var val=parseFloat(((dt.play[0] * 100.0) / dt.play[1]).toFixed(2));
+              if (val>0 && val<=100){
+                od.e['e'+dt.ep]=val;
+                val_prog=val;
+              }
+            }
+          }
+          od.s[_SD]={
+            e:dt.title, /* en */
+            j:dt.title_jp?dt.title_jp:dt.title, /* jp */
+            i:dt.poster, /* posted */
+            t:dt.tip, /* ttip */
+            u:dt.url /* real url */
+          };
+
+          var oexp={
+            id:ni,
+            title:dt.title,
+            title_jp:dt.title_jp,
+            episode:dt.ep,
+            progress:val_prog
+          };
+
+          if (out_t.indexOf(n)==-1){
+            out_t.push(n);
+            exp.push(oexp);
+          }
+        }
+      }
+    }
+    var out=storeGet(_VARNAME,{
+      detail:{},
+      history:[],
+      fav:[],
+      exp:{
+        fav:[],
+        history:[],
+      }
+    });
+    // console.log(JSON.parse(JSON.stringify(out)));
+    listing(list.history, out.detail, out.history, out.exp.history);
+    listing(list.fav, out.detail, out.fav, out.exp.fav);
+    storeSet(_VARNAME,out);
+    console.log("Export from "+source_domains[_SDZ]);
+    // console.log(JSON.stringify(out));
+
+    if (_SDZ<source_domains.length-1){
+      setTimeout(function(){
+        var ts=_SDZ+1;
+        goTo('https://'+source_domains[ts]+'/__view/export.html?'+$tick());
+      },200);
+    }
+    else{
+      // _JSAPI.reloadHome();
+      // _JSAPI.storeDel("export_global_list");
+      function prdat(t,d){
+        h='';
+        for (var i=0;i<d.length;i++){
+          var z=d[i];
+          var k=[];
+          k.push(i+1);
+          k.push(t);
+          k.push(z.title);
+          k.push(z.title_jp);
+          k.push(z.episode);
+          k.push(z.progress+"%");
+          k.push(z.id);
+          h+=k.join("\t")+"\n";
+        }
+        return h;
+      }
+
+      var g=storeGet(_VARNAME);
+      console.log(g.exp);
+      var h=
+        'No\tType\tTitle\tRomanji\tEpisode\tProgress\tID\n'+
+        prdat('WATCHLIST',g.exp.fav)+'\t\t\t\t\t\n'+
+        prdat('HISTORY',g.exp.history);
+      window._exportdata=h;
+      window.showTextArea=function(){
+        document.body.innerHTML=
+          '<h2 style="margin:0;padding:0">CSV Contents</h2>'+
+          'Copy to spreadsheet like excel or google sheet. Press BACK/ESC to return.<br><br>'+
+          '<textarea onclick="this.select()" '+
+            'style="padding:4px;border:0;outline:0;width:80%;height:50vh;background:#111;color:#ccc;border-radius:3px">'+
+            special(window._exportdata)+'</textarea>';
+        document.body.style.paddingTop='20vh';
+      };
+
+      if ('getMyIpAddress' in _JSAPI){
+        var urls='http://'+_JSAPI.getMyIpAddress()+'/export.csv'
+        _JSAPI.setExportString(h);
+        var qrurl='https://api.qrserver.com/v1/create-qr-code/?size=256x256&data='+encodeURIComponent(urls);
+        var m ='<h2>SCAN TO DOWNLOAD CSV</h2>'+
+          '<img style="max-height:60vh;outline:none" onclick="window.showTextArea();" src="'+qrurl+'">'+
+          '<br><br>Scan with same wifi network.<br>Press BACK to return..';
+        document.body.innerHTML=m;
+        document.body.style.paddingTop='5vh';
+      }
+      else{
+        window.showTextArea();
+      }
+      
+
+      window._KEYEV=function(key, evSource){
+        if (key==27){
+          _JSAPI.storeDel(_VARNAME);
+          _JSAPI.setExportString('');
+          _JSAPI.reloadHome();
+        }
+      };
+    }
+  }
+  else{
+    // _JSAPI.reloadHome();
+  }
+};
+</script>
+</head><body style="background:#000;color:#fff;text-align: center;font-family: sans-serif;padding-top: 49vh;">
+<script>document.write("Exporting old "+location.host+" history &amp; watchlist...");</script>
+</body></html>

@@ -1,0 +1,587 @@
+# Changelogs
+- **5.6.0 🎆**
+  - Add new source: miruro with 4 provider: animepahe, zoro, anivibe, gogoanime
+  - Add new source: gojo
+  - Add new subtitle outline style
+  - Fix HiAnime/Aniwatchtv and kaas streaming
+  - Disable cast features - Resupport non-google devices like fireos & Quest VR
+  - Add relaxed seeking
+  - Filter Home Screen + Add popular & trending anime list
+- **5.4.0** 🎡
+  - Update mainly because the shutdown of aniwave+anix
+- **5.3.2** 🎡
+  - Brand new app logo for mobile and desktop
+  - Execute back key action on key-up event (Android)
+  - Vidstream & megaF direct scrap implementation for faster playback loading
+  - Replace-string Inject embed.js on android and electron
+  - Automatically fetch new keys if last mediainfo failed to load
+  - Update new aniwave/anix encryption
+  - Update new vidstream/megaF streaming
+  - Add HLS Proxy Settings
+  - Add episode title and preview image fetch from api.ani.zip
+  - Disable animeflix from source selection
+  - Improve anilist loading performance
+  - Change hq anilist banner image image using api.ani.zip api call for detail anime info
+  - Hide mp4upload source from electron app
+  - Fix Add to MAL
+  - Add anilist bannerImage as wallpaper
+  - Refresh video after changing prefer dub audio setting
+  - Add multilanguage audio track selection for animeflix & some kickass
+  - Update quality selection method on Android for fast switch
+  - Remove dub from subtitle language
+  - Prefer DUB Stream for dub option on subtitle replacement
+- **5.2.4** 🦄
+  - Update animeflix video playback
+  - Fix MAL updating on android
+  - Fix mac reinit window
+  - Autohide cursor on playback
+- **5.2.0** 🧸
+  - Update vidplay & myclod rebranding to vidstream and MegaF
+  - Update mobile portrait ui
+  - Implement search history on touch device
+  - UI: Change all confirm dialog with async html based dialog
+  - Priority video loading rather than interface initializing
+  - Update source 1/2 streaming server for faster loading time
+  - Switch user who's login will highlight last user
+  - Move playback genres below title, and make sure right masking enable
+  - Using api.qrserver.com for generating qr - fix QR code bug
+  - Minimize slideshow effect for better performance
+  - Fix search key navigation for touch device
+  - Improve significant performance by using transition property selection rather than all
+  - Add space key as play/pause on playback
+  - Fix cannot click on skip intro button
+  - Add click sound to confirm dialog left/right keys
+  - Add back button in settings on portrait mode
+  - Tweak list arrow styling
+  - Add playback close confirmation settings
+  - Improve some anime source matching
+  - Fix double back to close playback
+  - Change splash background to black
+  - Add image cdn from wsrv.nl in settings for better cache & image loading performance
+  - Add more subtitle font family selection
+  - Add extra large subtitle font size
+  - Reduce slideshow items to 10 from 15
+  - Add large ui style settings
+  - Fix anilist avatar not shown when image cdn active
+  - Subtitle: separate multiple conversation vertically.
+  - Fix playback back button not visible on loading
+  - Fix seeking progress
+  - Update android intercept connection sequences
+  - Tweak ui and gradient
+  - use -webkit-mask-image for slideshow image gradient
+  - remove gradient from wallpaper
+  - set black as default background
+  - Tweak for darker backgrounds
+  - Add some text-shadow on anime list
+  - Fix add to watchlist on popup only saved romanji title only
+  - Tweak styling and text shadow on header
+  - Fix animeflix subtitle not shown
+  - Fix Anilist button on detail popup
+  - Set non Large UI slideshow full width
+  - Use -webkit-mask-image only when wallpaper selected to improve performance on slideshow when wallpaper is disabled
+  - Reenable source 1 futoken (faster) method for loading video - new key repository now works again.
+  - Make sure Image CDN for wallpaper set for best quality
+  - Disable all html autocomplete on input element
+  - Github-Action Autobuild
+  - Desktop:
+    - Add input dialog support for change display name and PIN
+    - Implement stream type selection - hardsub, softsub, dub dialog
+    - Implement buffer indicator
+    - Implement navigator.mediaSession.metadata for videoSetMeta replacement
+    - Use axios for http client
+    - Add Dns over HTTPS support for connection
+    - using axios instance
+    - Add DoH provider settings
+    - set maxSockets per domain to 30
+    - remove http log for source 3-4 stream
+    - Interceptor pass response headers
+    - add support for proxy x-post-prox
+    - player update dash support
+    - fix skip time indicator
+    - Player don't send play before duration available
+    - Add fullscreen support for macos
+    - source 6 mirror url fix
+    - Add support for custom source domain name
+    - Add toast replacement
+    - Disable mouse move prevent playback control autohide
+    - fix bypass request on vidplay(source 1/2) streaming
+    - remove setContentSize - causing window not launch
+    - add app icons
+    - Version configure from gradle
+    - Add debian package for linux-x64
+    - Add fullscreen button
+    - Add window installer build
+    - Add rpm build for linux
+    - Remove text-shadow on header item when mouse over
+    - disable preload next episode video stream on electron
+    - Change preload path script
+    - set sandbox parameter
+    - run update-version before building
+    - Github-Action Autobuild
+    - Fix vidplay server
+    - Auto load server data from github server.json
+- **5.0.0** 🍦
+  - Features
+    - Add Parental Control
+      - Age rating not available in list so it still shown there, but on popup or playback it will be blocked
+      - Source 6 have rating in list, so anime with higher rating will be blocked right in the list
+      - Source 5 will be hidden if user have rating lower than R+
+      - All 18+ item in list will be hidden if user have lower age rating than R+
+    - Add Full Touch Support
+      - Add double tap at edge to fast forward/rewind
+      - Add touch action buttons (play/pause, prev, next, close)
+      - Tap+hold -+ episode to jump episode
+    - Add portrait layout and auto-orientation
+      - Home screen portrait layout
+      - Search portrait layout
+      - Relayout anime popup & anilist detail in portrait
+      - Who's Wathing page portrait layout
+      - Settings and other component in portrait
+      - Playback will force orientation to landscape
+    - Add Auto MAL/AniList Tracking features - configurable
+    - Add OSD on playback (volume, brightness, seeking)
+    - Using device optimal refresh rate, for device with >60hz refresh rate (90,120,144hz). All UI will looks so fluid now. Android 11+
+    - Implement MediaSession for media remote control
+  - Application
+    - Add back to sidebar before exit
+    - Add bluetooth media key support
+    - Fix playnext and leanback androidtv list
+    - Add support androidtv PlayNext for all sources
+    - Auto switch source on playnext launch
+    - Auto switch source on androidtv home list launch
+    - Add support for HLS multiple audio on source 6
+    - Use higher quality banner image for slideshow
+    - Fix play/pause key on keyboard or remote
+    - Fix playing episode bigger than available episode
+    - Fix MAL login failed message
+    - Add Switch page on select settings
+    - Add Seek Value settings
+    - Fix MAL & AniList qr login on touch devices
+    - Add proper touch support for slideshow
+    - Allow (MAL/AniList) plan+tabbed list to be selected on MyList customize
+    - Fix media play/pause event conflict
+    - Detect if device have touchscreen
+  - UI & UX
+    - Add playback speed dialog
+    - Add pull to refresh
+    - Tweak closing sidebar behavior
+    - Add interface color preview in selection
+    - Add stream server dialog selector
+    - Add video resolution info on Auto quality
+    - Add video selection quality for source 6
+    - Show streaming server name on stream button
+    - Hide quality selection on unsupported server (mp4upload & filemoon)
+    - Tweak quality selection item display
+    - Add support for source-6 HLS quality selection
+    - Add resolution info on quality selection
+    - Minimize source 6 switch episode timing
+    - Fix quality button not show current quality
+    - Tweak slideshow image masker gradient
+    - Add stream type selection
+    - Move add watchlist into genres row
+    - Slideshow object-position transition for portrait
+    - Move mirror positions
+    - Add DASH streaming quality selection
+    - Tweak dialog display and transition
+    - Add slideshow slowly scaling animation for image only
+    - Hide playback speed button on unsupported android version
+    - Auto change quality icon
+    - Supporting android insets - Make sure no element hidden (untouchable) below navbar and statusbar
+    - Set tap outside pin window (who's watching) as back action
+  - Networking, API and Sources
+    - Fix animeflix with gogocdne stream server
+    - Fix animeflix idinfo fetch
+    - Add support for filemoon stream server
+    - Add mp4upload support for source 1+2 streaming server
+    - Wait until VRF library loaded before playback for source 1
+    - Clear launch argument after opening playback
+    - Make BirdStream (dash-based) as main server for source 6
+    - Add banner cache in free kv db
+    - Add auto-submit banner url on playback to kv-database with AniList anime-id as key
+  - Others
+    - Fix Anilist prevented profile picture to load
+    - Add related & recommendation from AniList for source 5 & 6
+- **4.8.0** 🪂
+  - Features
+    - Add text opacity selection for subtitle style
+    - Revamp user profile menu with internal dialog
+      - Show icons on popup dialog menu
+      - Show avatars for user selection
+      - Don't show anilist/mal avatars when editing user
+      - Only showing when selecting their own avatar
+  - UI & UX
+    - Change all android list dialog with custom html based dialog
+    - Detailed performance-ui effect selector
+    - Performance UI now show selected effect rather than disabled effect
+    - Add scale config on performance-ui
+    - fix slideshow jp-title text-shadow
+    - Set directly open sidebar enable by default
+    - Change subtitle style menu from android dialog to custom html based menu dialog
+    - Disable css tap highlight
+    - Remove slideshow scale effect
+    - Make playback meta background darker
+    - Cyclic slideshow navigation
+    - Fix dialog selection class to active
+  - Others
+    - Always set episode-1 when add to watchlist
+- **4.6.5** 🍙
+  - Features
+    - Add New User Profile
+      - Add user management - Up to 5 users
+      - Add customizable user display name
+      - Add pin login per user
+      - Add user avatar selection
+      - Add default user selection
+      - Add AniList & MAL avatars in profile picture selection
+    - Add New Subtitle Style
+      - Add subtitle style preview
+      - Add color selection on subtitle style
+      - Add monospace font on subtitle style
+      - Add background opacity selection on subtitle style
+    - Add New app sidebar
+      - Move source selection to sidebar
+      - Add sidebar opening mode
+    - Add New Login Screen
+      - Add login screen follow user theme & wallpaper
+    - Add Exit Mode Settings - Configurable by admin only
+  - UI & UX
+    - Add image picker for avatars and wallpaper
+    - Revamp playback list of episodes, seasons, related and recommendation
+    - Tweak AniList have new episode indicator for more visibility
+    - Auto-hide skip intro button after 3 seconds if autoskip intro is disabled
+    - Enable mask fade for list edges in performance-ui
+    - Fix AnimeTV top logo color
+    - Remove source selection from settings
+    - Remove html5 player setting
+    - Remove compact list settings
+    - Add warning info for use dub stream
+    - Move MyList Main Page, Show Clock & Show sidebar to UI category
+  - Networking, API and Sources
+    - Add kaido.to to hianime (source 3) alternative domain
+  - Others
+    - Add spre config variable for lists auto dettach
+    - Set some settings item only available for admin (check nightly, cache settings, login screen)
+    - Add youtube channel link in about - settings
+    - Source will follow user last selected source
+    - Fix initial config values
+    - Fix time jump to last saved timestamp on next episode
+    - Fix spacebar on search
+    - Assign menu,f1,f10 and red key to show sidebar
+- **4.2.5** 🫧
+  - Features
+    - New subtitle style config selection
+    - Add search history support for built in keyboard
+    - Add Multi domain name for sources
+      - Add domain check and benchmark
+      - Source 1: aniwave.to, aniwave.li, aniwave.vc
+      - Source 2: anix.to, anix.ac, anix.vc
+      - Source 3: hianime.to
+      - Source 4: aniwatchtv.to, aniwatch.se
+      - Source 5: animeflix.live, animeflix.gg, animeflix.li
+      - Source 6: kaas.to, kickassanimes.io, kaas.ro, www1.kickassanime.mx
+  - UI & UX
+    - OK key will directly does pause/play without needed to show menu first
+    - Change outline to border on slideshow watch now button
+    - Switch pause/play icon according actions
+    - Update playback progress icon
+    - Add next/prev action in playback use ch+/-
+    - Fix typo AnimeList to AniList
+    - Change search to source when selecting genre from playback
+    - Set max watchlist & history size to 200
+    - Order AniList&MAL user list by updated time
+    - Disable list opacity when inactive, should make performance a bit better
+    - Fix list lost active class when myist updated
+    - Show total EP on MAL list
+  - Networking, API and Sources
+    - Add Cache Size settings
+    - Add clear cache function in settings
+    - Fix some title not match with AniList on some source
+  - Others
+    - Add support for playback speed on Android 9+
+    - Clear subtitle display when seeking backward
+    - Remove nsfw genre from AniList search
+    - Fix time progress not work when skip intro start from 0 seconds
+- **4.0.4** 🍿
+  - Features
+    - Revamp Search UI
+      - Add in app Keyboard
+      - Add Search History
+      - Mute keyboard sound
+      - Add Voice Search on search page
+      - Add Search from AniList function
+      - Add Clear search history
+      - Add remove individual search history
+    - Add AniList tab list on Home - disabled by default
+    - Add AniList tab list on MyList
+    - Add MAL tab list on MyList
+  - UI & UX
+    - Add navigation sound (configurable at settings)
+    - Add MyList as Main Page settings
+    - Add show/hide clock in homescreen
+    - Online Based wallpaper
+    - Update synonym + other name icon
+    - Tweak slideshow pager indicator transition
+    - Fix home-list left position
+  - Networking, API and Sources
+    - Fix source 3/4 no-duration & (? eps) info
+    - Fix source 1 & 2 non-mirror stuck at Streaming Video
+    - Fix Animeflix Airing list
+    - Fix Animeflix intro and add outro skip time
+  - Others
+    - Fix video ending bug
+    - Fix month typo
+- **3.8.0** 🍓
+  - Features
+    - Add voice search
+    - Add clear history feature
+    - Add AniList detail anime on popup
+      - Add to AniList function
+      - Add to MAL function
+      - Anime details & trailer
+    - List
+      - Top Anime, All Time Popular & Top This Year from AniList - disable by default
+      - Add Upcoming anime from AniList in home-page - disable by default
+      - Add MAL Plan to watch list - disable by default
+      - Add AniList planned to MyList - disable by default
+  - Performance
+    - Minimize use of scaling transform specially on pb_menu and home_list
+    - Use relative global container for UI elements
+    - Display none for home element when playback shown
+    - Remove home slideshow information scaling
+    - Disable remote debuging webview on release build
+    - Minimize usage of position fixed for better performance[*]
+    - initialized MyList only after it shown
+  - UI & UX
+    - Update logo & branding design
+    - Tweak scrolling amount to fits it respectable pages (home, list, settings, playbacks)
+    - Use outerWidth/outerHeight for measure display rather than innerWidth/Height
+    - Remove buffering spinning
+    - Tweak back button before exit
+    - Hide stars when averageScore unavailable
+    - Tweak nightly date format
+    - Add nightly build release date time info
+    - Use youtube thumbnails when banner image unavailable (maxres)
+    - Rearrange detail info positioning
+    - Add Larger font size
+    - Add blur effect - only for non-performance-ui
+    - Set big font-size as default
+    - Add detail episode info & episode indicator/symbol on list
+    - Fix overflow line on slideshow image
+    - Tweak ordering item size
+    - Tweak & relaxed buffering indicator
+  - Networking, API and Sources
+    - Global update MAL/AniList
+    - Merge kickass anime stream skip data & subtitle from both mirror
+    - Nulling default stream_mirror - kaas
+    - Fix AniList retry request
+    - Fix cb(null) on non returned exception, prevent some unexpected behavior
+    - Use new query for airing schedule
+    - Fix anilist request for title with characters outside of Latin1
+    - Fix schedule request
+    - Fix source-6 kickass ep-0 play
+    - Block all adult contents from AniList data
+    - Improve matching anime algorithm
+    - Fix anilist find no data handler
+    - Fix vidplay streaming domain
+    - Include chinese in anilist if chinese anime is selected
+  - Others
+    - Check SpeechRecognizer availability
+    - Fix trailer playing audio but have error video not available
+- **3.4.8 ❄️**
+  - Reupdate Source 1 & 2 Encryption with online source vrf encryptor
+- **3.4.6 ❄️**
+  - Update Source 1 & 2 Encryption
+  - Update application branding
+- **3.4.0 🪇**
+  - **New UI Design**
+  - **Add Source 6 from Kickassanime**
+  - **Add Check for Nightly Build & Install nightly via app**
+  - **Add trailer video for slideshow (Configurable at settings)**
+  - **Add airing schedule**
+  - **Add managing & reordering home and mylist**
+  - Add buffering indicator
+  - Add AniList trending now home slideshow settings
+  - Add dark theme color
+  - New Paging list: Home and MyList
+  - Add Time/Clock at home
+  - Add Select Video Quality on global settings
+  - Add Left/Right key to jump category on settings
+  - Cleanup and Remove unused java functions
+  - Add support for DASH streaming on exomedia for source 6 bird-stream
+  - Add source 1/2 of vidplay/mcloud video scrapper without iframe usage
+  - Optimize requests & paralleling requests for faster loading times
+  - Fix html5 player autostart
+  - Disable quality selection on unsupported sources
+  - Update Http client no-cache settings
+  - Fix AnimeFlix Video Streaming
+  - Block unused, analytic & ads Youtube requests
+  - Add loading animation for lists
+  - Add anilist retry on error 500
+- **2.9.9 🪁**
+  - Add new-slideshow to Source-1
+  - Add new Gojo Satoru wallpaper
+- **2.9.8 🍕**
+  - Fix unsupported unary syntax for old webview
+  - Fix mirror streaming playback for source 1 & 2
+  - From 2.9.7
+    - Fix history select episode not works
+  - From 2.9.6
+    - Update Skip intro/outro time priority
+  - From 2.9.5
+    - Update streaming domain for source 1/2 video streaming
+    - Change playback loading data for Source 1 & Source 2, should be faster
+    - Change chibi wallpaper to requested Kimi-no-nawa wallpaper
+    - Add source encryption functions
+    - Tweak dub icon inside episode
+    - Add dub icon per episode for source 1&2
+  - From 2.9.0
+    - Fix source 1/2 video player
+  - From 2.8.9
+    - Disable new slideshow for source 1/2 to prevent WAF
+- **2.8.8 🍕**
+  - Add recently updated to Source-5
+  - Add source1/2 blocked confirmation
+  - Fix video end before actually end
+  - Add Source-5 From Animeflix
+  - Update video player handling & exomedia data source
+  - Set Source-5 as default source
+  - Source 5: Add Dub icon in episode
+  - From 2.7.1 to 2.7.9
+    - Add Use DUB Stream settings to watch dub with subtitle
+    - Add Disable Subtitle to watch japan audio without subtitle (Only for softsub source)
+    - Fix anix playback of WAF blocked
+    - Fix source3 & 4 slideshow image
+    - If you have a problem with source 1/2, Select source 2 & use Generic HttpClient
+    - Add Source-4 from aniwatchtv with same scrapper as Source-3
+    - Fix yet another pixelated thumbnails (source1/2) of top-anime,related & reccommendation
+    - Add source-3 from hianime
+    - Add cronet disk cache
+    - Disable settings items if it doesn't support with other settings
+    - Prevent action if settings item is disabled
+    - Update some typo & Source naming
+    - Add new slideshow style for source 3
+    - Add slow scaling animation on slideshow
+    - Remove opacity from unactive home list
+    - Make sure search & settings button hidden non-liga character
+    - Add lazy loading transition for slideshow
+- **2.6.0 🍬**
+  - Fix history/watchlist timing reset on uncompleted rewatch
+  - Fix low-res reccommendation & related thumbnails
+  - Use release configuration + minify for apk - file size becoming ~8MB
+  - From 2.5.9
+    - Add MAL/AniList Update watch progress position settings
+    - Add preload data & video for next episode
+    - Fix Top Anime low res thumbnails
+  - From 2.5.7
+    - Fix MAL not loading player
+    - Fix No-Transition not saved for next launch
+  - From 2.5.6
+    - Add support for more softsub languages (if content supported)
+    - Change `SOFTSUB` info into `TRANSLATE` if it was translated
+    - Update User-Agent
+    - Make html5 video load slightly faster
+    - Use popup for subtitle selection
+    - Add subtitle style popup
+    - Wallpaper & Interface Color popup
+    - Tweak ui performance
+    - Add no Transition animation settings
+    - Add css will-change
+  - From 2.5.5
+    - Add HttpClient selection settings
+    - Add cronet engine for HttpClient selection
+    - Add generic HttpClient
+    - Support playback speed for html5 video
+    - Support video scaling for html5 video
+    - Disable forcing quality for html5 video
+    - Change scrollTo to scrollTop for webview compatibility with older version
+    - Fix AniList & POST, PUT requests on non OkHttp client
+  - From 2.5.4
+    - Add `Use HTML5 Video Player` Settings for stuttering problem
+    - Change button title to `Skip Outro` on 2nd skip time
+    - Add loading animation on popup
+    - Set solid background for Wallpaper 9
+    - Preload assets & remove unused placeholder
+    - Update http engine to support multiple httpclient backend
+  - From 2.5.2
+    - Retreive ttip from anime url if ttip unavailable
+    - Fix anime url not parsed if there is no ttip
+    - Re-search anime without year or season if not-found when matching MAL/AniList content
+    - Optimize network loading via okhttp
+    - Change domain matching by equals rather than contains to avoid static content loaded by okhttp
+- **2.5.0 ✨**
+  - **AniList** Integration
+  - QRCode Webbased AniList & MAL authorization
+  - Use okhttp for connection handler
+  - Add DoH (DNS over HTTPS) for ISP that blocked source domain
+  - Cleanup settings & grouping
+  - Multiple choice item will show popup on settings
+  - Fix watchlist & history cannot clicked
+- **2.3.0 🏕️**
+  - New Settings UI
+  - Add progressive cache config
+  - Fix MAL current episode not updated
+- **2.2.0 ⚡**
+  - Add font size settings
+  - Add media key (play/pause) handler
+  - Tweak image cache
+  - Set min-sdk to sdk22
+- **2.1.1 🚀**
+  - Add informative - compact list view
+- **2.1.0 🚀**
+  - **Add japan title settings**
+  - Move setting from localStorage to Android pref
+  - Performance-UI as default
+  - Tweak settings popup responsiveness
+  - Fix cache too strict + no new update
+- **2.0.0 ⭐**
+  - Add new source server (check `server.json`) for better performance & without cloudflare validation
+  - Add change source settings
+  - Add new popup anime detail info before opening player
+  - Set `SOURCE 2` as default source for better performance (for now)
+- **1.8.2**
+  - Fix anime may not load next episode
+- **1.8.0**
+  - Fix some popup glitch & episode integer
+  - Add-remove watchlist & history
+  - Add rating and label for adult rating
+  - Popup for Resume, Play Next
+  - Add button to Add and Remove from Watchlist
+  - Add button to Remove from History
+  - Add MAL popup menu
+  - Add update watched episode for MAL watchlist
+  - Add loading screen when matching MAL anime
+  - Tweak MAL list fetch
+  - Add discord info message from channel ⁠`animetv-info` in homescreen
+  - Update homescreen-ui
+  - Update episode counting on MAL list
+  - Add support for Android 7 sdk24
+- **1.6.0**
+  - Add auto-update feature
+  - Add chinese list at homelist
+  - Fix hardsub unavailable (ex: gintama s1)
+  - Add performance-ui
+  - Add mirror stream server
+  - Change main font to Fira Sans
+- **1.5.6**
+  - Fix change episode stuck at previous video
+  - Add softsub non-translated for Arabic, German, Italian, French, Russian & Spanish (If available)
+- **1.5.4-beta4**
+  - Add button for available stream (soft, sub, dub)
+  - Skip time always use hardsub stream
+  - Tweak subtitle styling
+  - Change stream don't reload content view
+  - Add stream quality selection
+  - Firestick support (Initial testing)
+- **1.5.0**
+  - Add settings panel
+  - Add multilanguage closed-caption (for softsub content) - auto-translate from english with google translate
+  - Remove server change configuration (unusable)
+  - Add animation/transition config
+  - Move settings items from playback to settings panel
+  - Deactivate MP4UPLOAD server fetch for faster load
+  - Add subtitle style config (8 styles)
+  - Add cc info language tag
+  - Fix reload hardsub-dub-softsub switch
+  - Add playback speed
+  - Add Wallpaper settings
+  - Add include non-japan settings

@@ -1,0 +1,324 @@
+@font-face {
+    font-family: 'robotoc';
+    src: url(/__view/firac.ttf) format('truetype');
+}
+@font-face {
+    font-family: 'icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(/__view/icon.woff2) format('woff2');
+}
+
+@property --primary-bg {
+    syntax: '<color>';
+    initial-value: #102;
+    inherits: true;
+}
+@property --primary-1 {
+    syntax: '<color>';
+    initial-value: #406;
+    inherits: true;
+}
+@property --accent-1 {
+    syntax: '<color>';
+    initial-value: #c5f;
+    inherits: true;
+}
+/* Themes */
+:root {
+    --primary-bg: #305;
+    --primary-1: #406;
+    --accent-1: #c5f;
+    transition: --primary-bg 2s cubic-bezier(.25, .8, .25, 1),
+        --primary-1 2s cubic-bezier(.25, .8, .25, 1),
+        --accent-1 2s cubic-bezier(.25, .8, .25, 1);
+}
+.theme_green {
+    --primary-bg: #030;
+    --primary-1: #040;
+    --accent-1: #3b3;
+}
+.theme_teal {
+    --primary-bg: #022;
+    --primary-1: #033;
+    --accent-1: #0aa;
+}
+.theme_blue {
+    --primary-bg: #000839;
+    --primary-1: #014;
+    --accent-1: #47b;
+}
+.theme_brown {
+    --primary-bg: #310;
+    --primary-1: #420;
+    --accent-1: #b70;
+}
+.theme_red {
+    --primary-bg: #300;
+    --primary-1: #400;
+    --accent-1: #b44;
+}
+.theme_grey {
+    --primary-bg: #333;
+    --primary-1: #123;
+    --accent-1: #9FD356;
+}
+.theme_dark {
+    --primary-bg: #22262f;
+    --primary-1: #046;
+    --accent-1: #e83;
+}
+
+
+c {
+    font-family: 'icons';
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    vertical-align: middle;
+    -webkit-font-feature-settings: 'liga';
+}  
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: robotoc, Arial, Helvetica, sans-serif;
+    font-size: 1vw;
+    font-weight: normal;
+    background: #000 !important;
+    color: #fff;
+    overflow: hidden;
+}
+body *{
+    user-select: none !important;
+    -webkit-tap-highlight-color: rgba(0,0,0,0) !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
+#animetv{
+    text-align: center;
+    opacity:1;
+    visibility: visible;
+    position: absolute;
+    top:0;
+    left:0;
+    right: 0;
+    bottom: 0;
+    transition: opacity .3s cubic-bezier(.25, .8, .25, 1),
+    visibility .3s cubic-bezier(.25, .8, .25, 1);
+}
+#animetv.hide{
+    opacity:0;
+    visibility: hidden;
+}
+.login_logo{
+    width: 15vw;
+    height: 7vw;
+    object-fit: cover;
+    position: absolute;
+    bottom: .5vw;
+    right: .5vw;
+    opacity: .3;
+    z-index:5;
+}
+.flexhold{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.flexhold.usersel{
+    background: linear-gradient(180deg, rgba(0,0,0,.5), var(--primary-bg) 100%);
+    z-index: 2;
+}
+img.usr_wallpaper{
+    position: absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover !important;
+    background: transparent !important;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 4s cubic-bezier(.25, .8, .25, 1),
+        visibility 4s cubic-bezier(.25, .8, .25, 1);
+}
+.usr_wallpaper.hide{
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+.usr_wallpaper.active{
+    opacity: 1;
+    visibility: visible;
+}
+
+/* User sel */
+.user_sel{
+    text-align: center;
+    padding-bottom:5.5vw;
+}
+.user_sel:before{
+    content:"Who's Watching?";
+    display: block;
+    font-size:3.5vw;
+    margin-bottom: 2vw;
+    line-height: 1;
+    color:#999;
+}
+.pin .pin_keypad,
+.user_item {
+    display: inline-block;
+    margin:1vw;
+    color:#666;
+    text-align: center;
+    font-size:2.2vw;
+    width:15vw;
+    cursor: pointer;
+    outline: none !important;
+}
+.user_item img{
+    width: 14vw;
+    height: 14vw;
+    border-radius: 15vw;
+    border: .8vw solid transparent;
+    margin-bottom: .5vw;
+    opacity: .6;
+}
+.user_item .user_name{
+    position: absolute;
+    text-align: center;
+    width:15vw;
+    white-space: break-spaces;
+    word-wrap: break-word;
+    box-sizing: border-box;
+}
+.user_item.active img{
+    border-color:#fff;
+    opacity: 1;
+}
+.user_item.active{
+    color:#fff;
+}
+
+/* pin */
+.flexhold.pinhold{
+    z-index:10;
+    background:rgba(0,0,0,0);
+    visibility: hidden;
+    transition: all .35s cubic-bezier(.25, .8, .25, 1);
+}
+.flexhold.pinhold.active{
+    visibility: visible;
+    background:rgba(0,0,0,.7);
+}
+.pin{
+    padding:1vw;
+    border-radius: .8vw;
+    background-color: rgba(30,30,30,.85);
+    width:45vw;
+    box-shadow: 0 .28vw .56vw rgba(0, 0, 0, 0.25), 0 .2vw .2vw rgba(0, 0, 0, 0.22);
+    transform: scale(.9);
+    opacity: 0;
+    visibility: hidden;
+    transition: all .3s cubic-bezier(.25, .8, .25, 1);
+}
+.flexhold.pinhold.active .pin{
+    transform: scale(1);
+    opacity: 1;
+    visibility: visible;
+}
+/* @supports (backdrop-filter: blur(.6vw)) {
+    .pin{
+        background-color: rgba(30,30,30,.65);
+      backdrop-filter: blur(.6vw);
+    }
+} */
+.pin .user_item{
+    position: relative;
+    vertical-align: middle;
+    margin:0;
+    cursor: default;
+}
+.pin .user_item .user_name{
+    position: relative;
+}
+.pin .pin_keypad{
+    position: relative;
+    width:28vw;
+    vertical-align: middle;
+    text-align: center;
+    margin:0;
+    margin-left: 1vw;
+    cursor: default;
+}
+.pin .pin_keypad .pin_key{
+    display: inline-block;
+    font-size:2.5vw;
+    color:#fff;
+    line-height:3vw;
+    width:8vw;
+    margin:.5vw;
+    text-align: center;
+    background-color: rgba(40,40,40,.5);
+    border-radius: .5vw;
+    cursor: pointer;
+    outline: none !important;
+}
+.pin .pin_keypad .pin_value{
+    display:block;
+    padding-top: 1vw;
+    padding-bottom: 1vw;
+    text-align: center;
+}
+.pin .pin_keypad .pin_value b{
+    text-align: center;
+    display: inline-block;
+    width:5vw;
+    height:4vw;
+    line-height:4vw;
+    font-family: sans-serif;
+    color:#fff;
+    background-color: #000;
+    font-size:3vw;
+    border-radius: .5vw;
+    margin: .5vw;
+    vertical-align: middle;
+}
+.pin .pin_keypad .pin_value b:empty{
+    background-color: rgba(10,10,10,.7);
+}
+.pin .pin_keypad .pin_value.error b{
+    background-color: #800;
+}
+@keyframes horizontal-shaking {
+    0% { transform: translateX(0) }
+    20% { transform: translateX(.3vw) }
+    40% { transform: translateX(-.3vw) }
+    60% { transform: translateX(.3vw) }
+    80% { transform: translateX(-.3vw) }
+    100% { transform: translateX(0) }
+}
+.pin .pin_keypad .pin_value.error{
+    animation: horizontal-shaking 0.4s 1;
+}
+.pin .pin_keypad .pin_key.active{
+    background-color: var(--primary-1);
+    box-shadow: 0 .03vw .06vw rgba(0, 0, 0, 0.16), 0 .03vw .06vw rgba(0, 0, 0, 0.23);
+}
+.pin .pin_keypad .pin_key.pin_key_fn.active{
+    background-color: #800;
+}

@@ -1,0 +1,148 @@
+<style>
+video{
+  object-fit: cover !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+.html5-endscreen{
+  visibility: hidden !important;
+}
+#player .html5-video-player>*{
+  display: none !important;
+}
+#yterror_msg,
+#player .html5-video-player .html5-video-container{
+  z-index: 999999 !important;
+  position: fixed !important;
+  top:0 !important;
+  left:0 !important;
+  right:0 !important;
+  bottom:0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  visibility: visible !important;
+}
+#player .html5-video-player .html5-video-container{
+  display: block !important;
+}
+#yterror_msg{
+  z-index: 1 !important;
+  display: none;
+}
+#yterror_msg.active{
+  z-index: 9999999 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#yterror_msg div{
+  color:#aaa;
+  font-size:3vw;
+  text-align: center;
+}
+#player,
+#player .html5-video-player,
+body, html{
+  background:#000 !important;
+}
+</style>
+<script>
+(function(){
+  var vid=null;
+  var _errorMsgElm=null;
+  var _isErrorMsg=false;
+  function $p(c,d){
+    parent.postMessage(JSON.stringify({
+      vcmd:c,
+      val:d
+    }),'*');
+  }
+  function checkVid(){
+    if (!vid.src){
+      if (!_errorMsgElm){
+        _errorMsgElm=document.createElement('div');
+        _errorMsgElm.setAttribute('id','yterror_msg');
+        _errorMsgElm.innerHTML='<div>Trailer video is unavailable<br>or regionally blocked</div>';
+        document.body.appendChild(_errorMsgElm);
+      }
+      if (!_isErrorMsg){
+        _errorMsgElm.classList.add('active');
+        $p('yt-error','');
+        _isErrorMsg=true;
+      }
+    }else if(_errorMsgElm){
+      if (_isErrorMsg){
+        _errorMsgElm.classList.remove('active');
+        _isErrorMsg=false;
+      }
+    }
+  }
+  function init(){
+    var is_ended=false;
+    vid.addEventListener("play", function(){
+      $p('yt-play','');
+      is_ended=false;
+      checkVid();
+    });
+    vid.addEventListener("ended", function(){
+      $p('yt-end','');
+      is_ended=true;
+      checkVid();
+    });
+    vid.addEventListener("pause", function(){
+      $p('yt-pause','');
+      checkVid();
+    });
+    setInterval(function(){
+      if (is_ended){
+        $p('yt-end','');
+      }
+      else if (vid.paused){
+        $p('yt-pause','');
+      }
+      else{
+        $p('yt-play','');
+      }
+    },2000);
+    window.addEventListener('message',function(e) {
+        try{
+            console.warn(["YT", e]);
+            var j=JSON.parse(e.data);
+            if ('vcmd' in j){
+              if (j.vcmd=='toggle'){
+                if (vid.paused){
+                  vid.play();
+                }
+                else{
+                  vid.pause();
+                }
+              }
+              else if (j.vcmd=='pause'){
+                vid.pause();
+              }
+              else if (j.vcmd=='play'){
+                vid.play();
+              }
+              else if (j.vcmd=='mute'){
+                vid.muted=!vid.muted;
+              }
+            }
+        }catch(e){
+        }
+    });
+    if (location.search.indexOf('loop')){
+      vid.loop = true;
+    }
+  }
+  function findVid(){
+    vid=document.querySelector('.html5-video-container video');
+    if (vid){
+      init();
+      setTimeout(checkVid,1000);
+      return;
+    }
+    setTimeout(findVid,200);
+  }
+  findVid();
+})();
+</script>

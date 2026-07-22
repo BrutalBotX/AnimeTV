@@ -1,0 +1,76 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.plugin.serialization'
+}
+
+android {
+    namespace 'com.amarullz.androidtv.animetvjmto'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.amarullz.androidtv.animetvjmto"
+        minSdk 22
+        targetSdk 34
+        versionCode 590
+        versionName "5.9.1-Nightly"
+
+        // Automatic Build Version
+        buildConfigField "long", "TIMESTAMP", System.currentTimeMillis() + "L"
+        setProperty("archivesBaseName", "animetv-" + versionName)
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+        debug {
+            minifyEnabled false
+        }
+    }
+    signingConfigs {
+        debug {
+            storeFile file('../keystore/debug.keystore')
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.leanback:leanback:1.0.0'
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+
+    implementation 'androidx.tvprovider:tvprovider:1.0.0'
+    implementation 'androidx.preference:preference:1.2.1'
+
+    implementation 'org.jsoup:jsoup:1.17.2'
+    implementation 'com.devbrackets.android:exomedia:5.0.0'
+
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation('com.squareup.okhttp3:okhttp-dnsoverhttps:4.12.0')
+    implementation("androidx.webkit:webkit:1.12.1")
+    implementation 'com.google.android.gms:play-services-cronet:18.1.0'
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:2.1.20"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3"
+
+    // Cast:
+//    implementation 'androidx.mediarouter:mediarouter:1.2.5'
+//    implementation 'com.google.android.gms:play-services-cast-framework:21.5.0'
+//    implementation 'org.nanohttpd:nanohttpd:2.3.1'
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.20"
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0"
+}
