@@ -1,4 +1,30 @@
 # Changelogs
+- **6.0.0** 🔥
+  - **Complete streaming backend rebuild**
+    - Removed all 8 dead sources (AnimeKAI, Anix, Hianime, Aniwatch, Animeflix, KickAss, Gojo, Miruro)
+    - Integrated Anilili provider system with 16+ working streaming sources
+    - Multi-provider fallback for reliable playback
+    - Direct HLS/m3u8 streaming via Senshi, AniBD, AnimeKai, Anivexa and more
+  - **AniList integration**
+    - Direct AniList GraphQL bridge with rich metadata (descriptions, genres, banners, recommendations)
+    - DNS-over-HTTPS support for networks that block anilist.co
+    - Instant preview loading from cached data
+  - **UI modernization**
+    - Rounded corners on anime cards, menu buttons, and dialogs
+    - Glassmorphism effects on sidebar, preview window, and settings panel
+    - Modern depth shadows on focused elements
+    - All visual effects respect existing "UI & Performance" toggle settings
+  - **Fixes**
+    - Fixed profile pictures and wallpapers loading from GitHub
+    - Fixed genre data format preventing player crash
+    - Fixed video referer headers for streaming providers
+    - Fixed source selector showing empty placeholder entries
+    - Fixed softsub/sub/dub stream type differentiation
+  - **Technical**
+    - Kotlin 2.1.20 with coroutines and serialization
+    - WebView-based UI with PipeBridge infrastructure for future Miruro pipe support
+    - 16 named providers in mirror/server selector
+    - Comprehensive debug logging (ANILILI tag)
 - **5.6.0 🎆**
   - Add new source: miruro with 4 provider: animepahe, zoro, anivibe, gogoanime
   - Add new source: gojo

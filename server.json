@@ -8,17 +8,17 @@
   "stream_domain2": "megaf.cc",
   "update": "1.1-240624",
 
-  "appnum": 590,
-  "appver": "5.9.0",
-  "appsize": "6.00 MB",
-  "appurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/5.9.0/animetv-5.9.0.apk",
+  "appnum": 600,
+  "appver": "6.0.0",
+  "appsize": "6.15 MB",
+  "appurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/6.0.0/animetv-6.0.0.apk",
   "appnote": 
-    "- Tweak subtitles styles\n- Add reverse landscape support on playback\n- Rebuilt streaming backend with Anilili providers\n- UI modernization: rounded corners, glassmorphism",
+    "- Complete streaming backend rebuild with Anilili providers (16+ sources)\n- Remove all dead sources (AnimeKAI, Hianime, Anix, Animeflix, etc.)\n- UI modernization: rounded corners, glassmorphism sidebar & dialogs\n- Improved AniList bridge with DNS-over-HTTPS support\n- Fix profile pictures and wallpapers loading",
   
-  "pcnum": 590,
-  "pcver": "5.9.0",
-  "pcsize": "6.89 MB",
-  "pcurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/5.9.0/animetv-5.9.0.asar.gz",
+  "pcnum": 600,
+  "pcver": "6.0.0",
+  "pcsize": "0 MB",
+  "pcurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/6.0.0/animetv-6.0.0.asar.gz",
   "pcnote": 
-    "- Tweak subtitles styles\n- Add reverse landscape support on playback\n- Rebuilt streaming backend with Anilili providers\n- UI modernization: rounded corners, glassmorphism"
+    "- Complete streaming backend rebuild with Anilili providers (16+ sources)\n- Remove all dead sources (AnimeKAI, Hianime, Anix, Animeflix, etc.)\n- UI modernization: rounded corners, glassmorphism sidebar & dialogs\n- Improved AniList bridge with DNS-over-HTTPS support\n- Fix profile pictures and wallpapers loading"
 }
