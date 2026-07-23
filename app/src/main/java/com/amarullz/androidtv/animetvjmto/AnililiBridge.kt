@@ -118,7 +118,9 @@ object AnililiBridge {
     @JvmStatic
     fun getView(anilistId: Int): String = runBlocking {
         try {
-            val media = withContext(Dispatchers.IO) { aniList.animeInfo(anilistId) }
+            val media = withTimeout(20000) {
+                withContext(Dispatchers.IO) { aniList.animeInfo(anilistId) }
+            }
             if (media == null) return@runBlocking """{"status":false,"error":"Anime $anilistId not found"}"""
             mediaCache[anilistId] = media
 
@@ -179,17 +181,26 @@ object AnililiBridge {
         val errors = mutableListOf<String>()
 
         Log.d(TAG, "getVideoSources: id=$anilistId ep=$episodeNum cat=$cat")
+        if (seedMedia == null) {
+            Log.w(TAG, "getVideoSources: no media cached for $anilistId (getView may have timed out)")
+            return@runBlocking """{"status":false,"error":"Media data not loaded. Please try again."}"""
+        }
         for (provider in PROVIDER_NAMES) {
+            if (provider == "senshi" && seedMedia.idMal == null) {
+                Log.w(TAG, "  $provider: SKIPPED - no idMal (AniList entry missing MAL mapping)")
+                errors.add("$provider(skipped:no mal id)")
+                continue
+            }
             val episodeId = "watch/$provider/$anilistId/$cat/$provider-$episodeNum"
             val result = kotlin.runCatching {
-                withTimeout(12000) {
+                withTimeout(10000) {
                     withContext(Dispatchers.IO) { anivexa.getSources(episodeId, seedMedia) }
                 }
             }
             if (result.isFailure) {
                 val exc = result.exceptionOrNull()
                 val err = when (exc) {
-                    is TimeoutCancellationException -> "timeout(12s)"
+                    is TimeoutCancellationException -> "timeout(10s)"
                     else -> exc?.message ?: "unknown"
                 }
                 Log.d(TAG, "  $provider: FAILED - $err")
@@ -202,6 +213,7 @@ object AnililiBridge {
                 return@runBlocking buildSourceJson(sources)
             }
             Log.d(TAG, "  $provider: no streams")
+            errors.add("$provider(empty)")
         }
         Log.w(TAG, "getVideoSources: ALL FAILED - ${errors.joinToString("; ")}")
         """{"status":false,"error":"No sources. Tried: ${errors.joinToString(", ")}"}"""

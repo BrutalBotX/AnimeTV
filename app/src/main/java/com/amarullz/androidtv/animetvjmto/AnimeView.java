@@ -888,7 +888,9 @@ import javax.crypto.spec.SecretKeySpec;
         }
         me().mSession.setActive(true);
       }
-    }catch(Exception ignored){}
+    }catch(Exception e){
+      Log.e(_TAG,"videoSetSource error: " + e.getMessage(), e);
+    }
   }
 
   public void videoPlayerPlay(){
