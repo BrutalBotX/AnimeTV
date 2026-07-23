@@ -756,6 +756,13 @@ import javax.crypto.spec.SecretKeySpec;
             String h2=h[h.length-2]+"."+h[h.length-1];
             settings.put("Origin", "https://" +h2);
           }
+          if (videoReferer != null && settings.get("Origin") == null){
+            settings.put("Origin", videoReferer);
+            settings.put("Referer", videoReferer);
+          }
+        }
+        if (videoReferer != null && settings.get("Referer") == null){
+          settings.put("Referer", videoReferer);
         }
       } catch (MalformedURLException ignored) {}
       Log.d(_TAG,"VIDEO-DATA-SOURCE : "+videoStatCurrentUrl+" / ORIGIN : "+settings.get("Origin"));

@@ -6246,6 +6246,7 @@ const _API={
     },800);
   },
   vidInterval:null,
+  vidStartTimeout:null,
   videoGetPos:function(){
     if (html5video()){
       return _API.videoElectronPos;
@@ -6274,6 +6275,10 @@ const _API={
       clearInterval(_API.vidInterval);
       _API.vidInterval=null;
     }
+    if (_API.vidStartTimeout){
+      clearTimeout(_API.vidStartTimeout);
+      _API.vidStartTimeout=null;
+    }
     if (src){
       _API.videoSetUrl(src);
       var initialized=false;
@@ -6285,6 +6290,7 @@ const _API={
             body.classList.add('playback_on_video');
             initialized=true;
             isplayed=true;
+            if (_API.vidStartTimeout) { clearTimeout(_API.vidStartTimeout); _API.vidStartTimeout=null; }
             cb('ready',0);
             cb('time',_API.videoGetPos());
             cb('play',0);
@@ -12266,7 +12272,7 @@ const pb={
       }
     }
     else{
-      pb.pb_desc.innerHTML=addb+special(pb.data.synopsis);
+      pb.pb_desc.innerHTML=addb+nlbr(special(stripHtml(pb.data.synopsis)));
     }
 
 
@@ -12603,7 +12609,7 @@ const pb={
             addb='<b>'+bb+'</b>';
           }
         }catch(e){}
-        pb.pb_desc.innerHTML=addb+special(d.synopsis);
+        pb.pb_desc.innerHTML=addb+nlbr(special(stripHtml(d.synopsis)));
         try{
           pb.menu_clear(pb.pb_genres);
           for (var i=0;i<d.genres.length;i++){
@@ -18475,8 +18481,16 @@ const _MAL={
             if (retry<4){
               setTimeout(function(){
                 _MAL.alreq(q,vars,cb,notoken,retry+1);
-              },50);
-            }
+      },50);
+      _API.vidStartTimeout=setTimeout(function(){
+        if (!initialized){
+          console.log("ANILILI video start timeout (25s)");
+          body.classList.remove('playback_on_video');
+          _API.showToast("Video failed to start. Try a different mirror or episode.");
+          cb('error','video_start_timeout');
+        }
+      },25000);
+    }
             else{
               try{
                 cb(null);
@@ -20771,7 +20785,7 @@ query ($weekStart: Int, $weekEnd: Int, $page: Int, $perPage: Int) {
     }
   },
   preview_detail:function(d){
-    $('malview_synopsys').innerHTML=d.synopsis?special(d.synopsis):"&nbsp;"
+    $('malview_synopsys').innerHTML=d.synopsis?nlbr(special(stripHtml(d.synopsis))):"&nbsp;"
     
     var vd='';
     var vt='';

@@ -8,17 +8,17 @@
   "stream_domain2": "megaf.cc",
   "update": "1.1-240624",
 
-  "appnum": 610,
-  "appver": "6.1.0",
+  "appnum": 611,
+  "appver": "6.1.1",
   "appsize": "6.15 MB",
-  "appurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/6.1.0/animetv-6.1.0.apk",
+  "appurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/6.1.1/animetv-6.1.1.apk",
   "appnote": 
-    "- TV home page modernization: larger cards, more breathing room, bigger text\n- Cards: 14vw (base) / 18vw (large-UI) with increased gaps\n- Typography enlarged for TV viewing distances\n- Added top padding for content separation from slideshow\n- Larger section headers and info badges",
+    "- Fix HTML tags visible in anime descriptions (broken synopsis rendering)\n- Fix video stuck on streaming video: emergency AniList fetch when cache cold\n- Fix referer headers not applied to HLS streams\n- Add 25s timeout for video loading with error toast\n- Improve provider fallback when idMal missing",
   
-  "pcnum": 610,
-  "pcver": "6.1.0",
+  "pcnum": 611,
+  "pcver": "6.1.1",
   "pcsize": "0 MB",
-  "pcurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/6.1.0/animetv-6.1.0.asar.gz",
+  "pcurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/6.1.1/animetv-6.1.1.asar.gz",
   "pcnote": 
-    "- TV home page modernization: larger cards, more breathing room, bigger text\n- Cards: 14vw (base) / 18vw (large-UI) with increased gaps\n- Typography enlarged for TV viewing distances\n- Added top padding for content separation from slideshow\n- Larger section headers and info badges"
+    "- Fix HTML tags visible in anime descriptions (broken synopsis rendering)\n- Fix video stuck on streaming video: emergency AniList fetch when cache cold\n- Fix referer headers not applied to HLS streams\n- Add 25s timeout for video loading with error toast\n- Improve provider fallback when idMal missing"
 }

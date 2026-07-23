@@ -177,13 +177,29 @@ object AnililiBridge {
     @JvmStatic
     fun getVideoSources(anilistId: Int, episodeNum: Int, category: String): String = runBlocking {
         val cat = if (category == "dub") "dub" else "sub"
-        val seedMedia = mediaCache[anilistId]
+        var seedMedia = mediaCache[anilistId]
         val errors = mutableListOf<String>()
 
         Log.d(TAG, "getVideoSources: id=$anilistId ep=$episodeNum cat=$cat")
         if (seedMedia == null) {
-            Log.w(TAG, "getVideoSources: no media cached for $anilistId (getView may have timed out)")
-            return@runBlocking """{"status":false,"error":"Media data not loaded. Please try again."}"""
+            Log.w(TAG, "getVideoSources: media cache cold for $anilistId; fetching from AniList...")
+            seedMedia = try {
+                withTimeout(15000) {
+                    withContext(Dispatchers.IO) { aniList.animeInfo(anilistId) }
+                }
+            } catch (e: TimeoutCancellationException) {
+                Log.e(TAG, "getVideoSources: emergency AniList fetch timed out")
+                null
+            } catch (e: Exception) {
+                Log.e(TAG, "getVideoSources: emergency AniList fetch failed: ${e.message}")
+                null
+            }
+            if (seedMedia != null) {
+                mediaCache[anilistId] = seedMedia
+                Log.d(TAG, "getVideoSources: emergency fetch succeeded")
+            } else {
+                return@runBlocking """{"status":false,"error":"Media data not loaded. Please try again."}"""
+            }
         }
         for (provider in PROVIDER_NAMES) {
             if (provider == "senshi" && seedMedia.idMal == null) {
