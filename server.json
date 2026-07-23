@@ -8,17 +8,17 @@
   "stream_domain2": "megaf.cc",
   "update": "1.1-240624",
 
-  "appnum": 600,
-  "appver": "6.0.0",
+  "appnum": 601,
+  "appver": "6.0.1",
   "appsize": "6.15 MB",
-  "appurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/6.0.0/animetv-6.0.0.apk",
+  "appurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/6.0.1/animetv-6.0.1.apk",
   "appnote": 
-    "- Complete streaming backend rebuild with Anilili providers (16+ sources)\n- Remove all dead sources (AnimeKAI, Hianime, Anix, Animeflix, etc.)\n- UI modernization: rounded corners, glassmorphism sidebar & dialogs\n- Improved AniList bridge with DNS-over-HTTPS support\n- Fix profile pictures and wallpapers loading",
+    "- Fix video loading hang: added timeouts to API calls (was stuck indefinitely)\n- Reduce provider timeout from 12s to 10s for faster fallback\n- Skip Senshi provider when no MAL ID available\n- Return clear error when media data fails to load\n- Log ExoPlayer errors instead of silently swallowing them",
   
-  "pcnum": 600,
-  "pcver": "6.0.0",
+  "pcnum": 601,
+  "pcver": "6.0.1",
   "pcsize": "0 MB",
-  "pcurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/6.0.0/animetv-6.0.0.asar.gz",
+  "pcurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/6.0.1/animetv-6.0.1.asar.gz",
   "pcnote": 
-    "- Complete streaming backend rebuild with Anilili providers (16+ sources)\n- Remove all dead sources (AnimeKAI, Hianime, Anix, Animeflix, etc.)\n- UI modernization: rounded corners, glassmorphism sidebar & dialogs\n- Improved AniList bridge with DNS-over-HTTPS support\n- Fix profile pictures and wallpapers loading"
+    "- Fix video loading hang: added timeouts to API calls (was stuck indefinitely)\n- Reduce provider timeout from 12s to 10s for faster fallback\n- Skip Senshi provider when no MAL ID available\n- Return clear error when media data fails to load\n- Log ExoPlayer errors instead of silently swallowing them"
 }
