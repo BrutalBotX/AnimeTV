@@ -8,17 +8,17 @@
   "stream_domain2": "megaf.cc",
   "update": "1.1-240624",
 
-  "appnum": 601,
-  "appver": "6.0.1",
+  "appnum": 610,
+  "appver": "6.1.0",
   "appsize": "6.15 MB",
-  "appurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/6.0.1/animetv-6.0.1.apk",
+  "appurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/6.1.0/animetv-6.1.0.apk",
   "appnote": 
-    "- Fix video loading hang: added timeouts to API calls (was stuck indefinitely)\n- Reduce provider timeout from 12s to 10s for faster fallback\n- Skip Senshi provider when no MAL ID available\n- Return clear error when media data fails to load\n- Log ExoPlayer errors instead of silently swallowing them",
+    "- TV home page modernization: larger cards, more breathing room, bigger text\n- Cards: 14vw (base) / 18vw (large-UI) with increased gaps\n- Typography enlarged for TV viewing distances\n- Added top padding for content separation from slideshow\n- Larger section headers and info badges",
   
-  "pcnum": 601,
-  "pcver": "6.0.1",
+  "pcnum": 610,
+  "pcver": "6.1.0",
   "pcsize": "0 MB",
-  "pcurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/6.0.1/animetv-6.0.1.asar.gz",
+  "pcurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/6.1.0/animetv-6.1.0.asar.gz",
   "pcnote": 
-    "- Fix video loading hang: added timeouts to API calls (was stuck indefinitely)\n- Reduce provider timeout from 12s to 10s for faster fallback\n- Skip Senshi provider when no MAL ID available\n- Return clear error when media data fails to load\n- Log ExoPlayer errors instead of silently swallowing them"
+    "- TV home page modernization: larger cards, more breathing room, bigger text\n- Cards: 14vw (base) / 18vw (large-UI) with increased gaps\n- Typography enlarged for TV viewing distances\n- Added top padding for content separation from slideshow\n- Larger section headers and info badges"
 }

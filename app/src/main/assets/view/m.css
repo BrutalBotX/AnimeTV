@@ -5212,3 +5212,242 @@ html:not(.ui_performance_blur) #search_header.animetv_header {
 html.ui_performance_blur #search_header.animetv_header {
   background: rgba(16, 16, 16, .95) !important;
 }
+
+/* ==============================
+   TV HOME PAGE — MODERN SPACIOUS LAYOUT
+   ============================== */
+
+/* ---------- Base Card Sizing (14vw, 6 per row) ---------- */
+.home_list>p>div {
+  width: 14vw;
+  height: 20vw;
+  margin-left: 1vw;
+  border-radius: .8vw !important;
+}
+.home_list>p>div img {
+  width: 14vw;
+  height: 20vw;
+  border-radius: .7vw !important;
+}
+
+/* ---------- List Spacing: top breathing room + section gaps ---------- */
+.home_list,
+.home_opt_list,
+.home_tabs {
+  padding: 2vw 5vw 2.5vw 5vw !important;
+}
+.home_list_notitle {
+  padding-top: 3vw !important;
+  margin-top: -1vw !important;
+}
+
+/* ---------- Section Title Headers ---------- */
+.home_list:before,
+.home_opt_list:before,
+.pb_menu.home_tabs>p:before {
+  font-size: 1.6vw;
+  padding-bottom: 1vw;
+}
+.home_list_notitle:before {
+  display: none !important;
+}
+
+/* ---------- Card Title Typography ---------- */
+.home_list>p>div b {
+  font-size: 1.5vw;
+  padding: .5vw .3vw;
+}
+.view-informative .home_list:not(#home_slide)>p>div b {
+  font-size: 1.4vw;
+  line-height: 1.3;
+  height: 3.8vw;
+}
+
+/* ---------- Info Badges ---------- */
+.home_list p div span.info {
+  font-size: 1vw;
+}
+.home_list p div span.info span {
+  font-size: 1vw;
+  border-radius: .5vw !important;
+}
+.home_list p div span.info span c {
+  font-size: 1vw;
+}
+
+/* ---------- Progress Bar ---------- */
+.home_list p div i {
+  height: .4vw;
+  bottom: .3vw;
+}
+
+/* ---------- View-Informative Card Sizing (14vw, poster + title below) ---------- */
+.view-informative .home_list:not(#home_slide) {
+  min-height: calc(var(--fs-20vw) + 23.5vw);
+}
+.view-informative .home_list:not(#home_slide)>p>div {
+  width: 14vw !important;
+  height: calc(var(--fs-20vw) + 21.5vw);
+  margin-left: .8vw !important;
+  border-radius: .6vw !important;
+}
+.view-informative .home_list:not(#home_slide)>p>div:first-child {
+  margin-left: 0 !important;
+}
+.view-informative .home_list:not(#home_slide)>p>div img {
+  width: 13vw;
+  height: 18.5vw;
+  border-radius: .6vw;
+  top: .6vw;
+  left: .5vw;
+}
+.view-informative .home_list:not(#home_slide)>p>div b {
+  padding: 0 .3vw 0 .3vw;
+  height: 3.8vw;
+  line-height: 1.9vw;
+}
+.view-informative .home_list:not(#home_slide)>p>div i {
+  bottom: calc(3.8vw + .6vw);
+}
+
+/* View-informative active highlight halo */
+.istouch.view-informative .home_list:not(#home_slide)>p>div:hover:before,
+.view-informative .home_list:not(#home_slide).active>p>div.active:before {
+  width: 14.4vw;
+  height: 19.5vw;
+}
+:not(.ui_performance_scale) .istouch.view-informative .home_list:not(#home_slide)>p>div:active:before,
+:not(.ui_performance_scale) .view-informative .home_list:not(#home_slide).active>p>div.active:before {
+  width: 14.2vw;
+  height: 19.3vw;
+}
+
+/* ---------- Slideshow Adjustments ---------- */
+.home_slideshow,
+#home_slide_touch {
+  height: 42vw;
+}
+#home_slide_holder {
+  margin-bottom: -69.5vw;
+}
+#home_slide_pager {
+  top: 32vw;
+}
+.home_slideshow p div {
+  height: 42vw;
+}
+.home_slideshow p div .img_holder {
+  height: 41.9vw;
+}
+.home_slideshow p div img {
+  max-width: 100vw;
+  min-height: 42vw;
+}
+.home_slideshow p div img.isthumb {
+  width: 100vw;
+}
+
+/* ==============================
+   LARGE-UI-LIST — TV SIZING
+   ============================== */
+.large-ui-list .home_list>p>div {
+  width: 18vw;
+  height: 25.5vw;
+  margin-left: 1.4vw;
+  border-radius: .9vw !important;
+}
+.large-ui-list .home_list>p>div img {
+  width: 18vw;
+  height: 25.5vw;
+  border-radius: .8vw !important;
+}
+
+.large-ui-list .home_list>p>div b {
+  font-size: 1.8vw;
+  padding: .6vw .3vw;
+}
+
+.large-ui-list .home_list p div span.info {
+  font-size: 1.2vw;
+}
+.large-ui-list .home_list p div span.info span {
+  font-size: 1.2vw;
+}
+
+.large-ui-list .home_list p:empty::after {
+  line-height: 24vw !important;
+  font-size: 2vw !important;
+}
+
+/* Large-UI view-informative */
+.large-ui-list.view-informative .home_list {
+  min-height: calc(var(--fs-20vw) + 30vw);
+}
+.large-ui-list.view-informative .home_list:not(#home_slide)>p>div {
+  width: 18vw !important;
+  height: calc(var(--fs-20vw) + 27.5vw);
+  margin-left: 1vw !important;
+}
+.large-ui-list.view-informative .home_list:not(#home_slide)>p>div:first-child {
+  margin-left: 0 !important;
+}
+.large-ui-list.view-informative .home_list:not(#home_slide)>p>div img {
+  width: 16.8vw;
+  height: 24vw;
+  border-radius: .7vw;
+  top: .6vw;
+  left: .6vw;
+}
+.large-ui-list.view-informative .home_list:not(#home_slide)>p>div b {
+  height: 4.5vw;
+  line-height: 2.1vw;
+  font-size: 1.6vw;
+}
+.large-ui-list.view-informative .home_list:not(#home_slide)>p>div i {
+  bottom: calc(4.5vw + .6vw);
+}
+
+/* Large-UI view-informative active halo */
+.istouch.large-ui-list.view-informative .home_list:not(#home_slide)>p>div:hover:before,
+.large-ui-list.view-informative .home_list:not(#home_slide).active>p>div.active:before {
+  width: 18.4vw;
+  height: 25vw;
+}
+:not(.ui_performance_scale) .istouch.large-ui-list.view-informative .home_list:not(#home_slide)>p>div:active:before,
+:not(.ui_performance_scale) .large-ui-list.view-informative .home_list:not(#home_slide).active>p>div.active:before {
+  width: 18.2vw;
+  height: 24.8vw;
+}
+
+/* Large-UI slideshow */
+.large-ui-list .home_slideshow,
+.large-ui-list #home_slide_touch,
+.large-ui-list .home_slideshow p div {
+  height: 58vw;
+}
+.large-ui-list #home_slide_holder {
+  margin-bottom: -55.5vw;
+}
+.large-ui-list #home_slide_pager {
+  top: 48vw;
+}
+.large-ui-list .home_slideshow p div .img_holder {
+  height: 57.9vw;
+}
+.large-ui-list .home_slideshow p div img,
+.large-ui-list .home_slideshow p div img.isthumb {
+  min-height: 58vw;
+  width: 100vw;
+}
+.large-ui-list .home_list p div span.info_ep_havenext {
+  top: 20.5vw;
+}
+.large-ui-list .home_list>.home_list_arrows c {
+  top: 12vw;
+}
+.large-ui-list #home_slide .home_list_loader {
+  top: 27vw;
+}
+.large-ui-list .home_list p div span.info.info_bottom {
+  top: calc(24vw - calc(var(--fs-8vw) * 1.4));
+}
