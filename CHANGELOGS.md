@@ -1,4 +1,10 @@
 # Changelogs
+- **6.1.3** 🛠️
+  - **Fix HTTP 403 blocking HLS stream playback**
+    - Provider-supplied referer is now properly applied as the Origin header on all stream requests
+    - Fixed cross-thread visibility: videoReferer field was not volatile, causing stale reads
+    - Data source factory unconditionally honors the provider's referer as the authoritative Origin
+    - Matches the stream probe's header pattern that already succeeded with HTTP 206
 - **6.1.2** 🛠️
   - **Fix video stuck on "STREAMING VIDEO" once and for all**
     - ExoPlayer errors are now detected and reported (previously silent forever)

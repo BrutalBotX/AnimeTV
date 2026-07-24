@@ -130,7 +130,7 @@ import javax.crypto.spec.SecretKeySpec;
   public boolean webViewReady=false;
   public static boolean USE_WEB_VIEW_ASSETS=false;
 
-  public String videoReferer = null;
+  public volatile String videoReferer = null;
 
   public volatile boolean videoError = false;
   public volatile String videoErrorMsg = "";
@@ -768,8 +768,14 @@ import javax.crypto.spec.SecretKeySpec;
         if (videoReferer != null && settings.get("Referer") == null){
           settings.put("Referer", videoReferer);
         }
+
+        // When the provider supplied a referer, trust it as the authoritative Origin
+        // (the CDN expects the same Origin the browser/probe sends, not a host guess).
+        if (videoReferer != null){
+          settings.put("Origin", videoReferer);
+        }
       } catch (MalformedURLException ignored) {}
-      Log.d(_TAG,"VIDEO-DATA-SOURCE : "+videoStatCurrentUrl+" / ORIGIN : "+settings.get("Origin"));
+      Log.d(_TAG,"VIDEO-DATA-SOURCE : "+videoStatCurrentUrl+" / ORIGIN : "+settings.get("Origin")+" / REFERER : "+settings.get("Referer"));
       return new AnimeDataSource.Factory()
           .setUserAgent(Conf.USER_AGENT)
           .setDefaultRequestProperties(settings)

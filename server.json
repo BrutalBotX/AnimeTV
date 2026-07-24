@@ -8,17 +8,17 @@
   "stream_domain2": "megaf.cc",
   "update": "1.1-240624",
 
-  "appnum": 612,
-  "appver": "6.1.2",
+  "appnum": 613,
+  "appver": "6.1.3",
   "appsize": "6.15 MB",
-  "appurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/6.1.2/animetv-6.1.2.apk",
+  "appurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/6.1.3/animetv-6.1.3.apk",
   "appnote": 
-    "- Fix video stuck on STREAMING VIDEO: player errors now detected, dead streams probed & skipped, auto-failover to next stream\n- Fix descriptions/genres randomly not loading: repaired AniList retry, added 3 fallback load paths\n- Embed streams ExoPlayer can't play are filtered out\n- Stale referer no longer leaks between videos",
+    "- Fix HTTP 403 on HLS streams: video referer now correctly used as Origin header, matching the probe's validated behavior\n- Fix volatile videoReferer for thread-safe cross-thread visibility (WebView thread to UI thread)\n- Data source factory always honors provider-supplied referer as authoritative Origin header",
   
-  "pcnum": 612,
-  "pcver": "6.1.2",
+  "pcnum": 613,
+  "pcver": "6.1.3",
   "pcsize": "0 MB",
-  "pcurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/6.1.2/animetv-6.1.2.asar.gz",
+  "pcurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/6.1.3/animetv-6.1.3.asar.gz",
   "pcnote": 
-    "- Fix video stuck on STREAMING VIDEO: player errors now detected, dead streams probed & skipped, auto-failover to next stream\n- Fix descriptions/genres randomly not loading: repaired AniList retry, added 3 fallback load paths\n- Embed streams ExoPlayer can't play are filtered out\n- Stale referer no longer leaks between videos"
+    "- Fix HTTP 403 on HLS streams: video referer now correctly used as Origin header, matching the probe's validated behavior\n- Fix volatile videoReferer for thread-safe cross-thread visibility (WebView thread to UI thread)\n- Data source factory always honors provider-supplied referer as authoritative Origin header"
 }
