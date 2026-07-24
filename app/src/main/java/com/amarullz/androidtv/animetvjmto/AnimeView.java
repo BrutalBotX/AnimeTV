@@ -62,6 +62,7 @@ import androidx.media3.common.Format;
 import androidx.media3.common.MediaItem;
 import androidx.media3.common.MediaMetadata;
 import androidx.media3.common.PlaybackParameters;
+import androidx.media3.common.PlaybackException;
 import androidx.media3.common.TrackGroup;
 import androidx.media3.common.Tracks;
 import androidx.media3.common.util.UnstableApi;
@@ -130,6 +131,9 @@ import javax.crypto.spec.SecretKeySpec;
   public static boolean USE_WEB_VIEW_ASSETS=false;
 
   public String videoReferer = null;
+
+  public volatile boolean videoError = false;
+  public volatile String videoErrorMsg = "";
 
   public String sourceCacheString = "";
 
@@ -841,6 +845,19 @@ import javax.crypto.spec.SecretKeySpec;
         me().mediaSetPosition(eventTime.currentPlaybackPositionMs);
       }
 
+      @Override
+      public void onPlayerError(EventTime eventTime, PlaybackException error) {
+        AnalyticsListener.super.onPlayerError(eventTime, error);
+        videoError = true;
+        String msg = error.getMessage();
+        if (msg == null) msg = "Unknown playback error";
+        if (error.getCause() != null && error.getCause().getMessage() != null) {
+          msg += " | " + error.getCause().getMessage();
+        }
+        videoErrorMsg = msg;
+        Log.e(_TAG, "PLAYER-ERROR: " + msg, error);
+      }
+
 
     });
   }
@@ -1513,6 +1530,8 @@ import javax.crypto.spec.SecretKeySpec;
       videoIsPlaying=false;
       videoDuration=0;
       videoPosition=0;
+      videoError=false;
+      videoErrorMsg="";
       videoStatCurrentUrl=url;
       activity.runOnUiThread(()->{
         try {
@@ -1530,7 +1549,17 @@ import javax.crypto.spec.SecretKeySpec;
     @JavascriptInterface
     public void videoSetReferer(String referer){
       Log.d(_TAG, "Video Set Referer = " + referer);
-      videoReferer = referer;
+      videoReferer = (referer == null || referer.isEmpty()) ? null : referer;
+    }
+
+    @JavascriptInterface
+    public boolean videoIsError(){
+      return videoError;
+    }
+
+    @JavascriptInterface
+    public String videoGetError(){
+      return videoErrorMsg;
     }
 
     public int videoLastBufferPercent=0;
@@ -2054,9 +2083,10 @@ import javax.crypto.spec.SecretKeySpec;
           activity.runOnUiThread(() -> webView.evaluateJavascript(js, null));
         } catch (Exception e) {
           Log.e(_TAG, "extGetView error: " + e.getMessage());
+          String emsg = e.getMessage() != null ? e.getMessage() : e.getClass().getSimpleName();
           final String js = "__EXT_DISPATCH(" + cbId + "," +
               JSONObject.quote("{\"status\":false,\"error\":\"" +
-              e.getMessage().replace("\"", "\\\"") + "\"}") + ");";
+              emsg.replace("\"", "\\\"") + "\"}") + ");";
           activity.runOnUiThread(() -> webView.evaluateJavascript(js, null));
         }
       });
@@ -2072,9 +2102,10 @@ import javax.crypto.spec.SecretKeySpec;
           activity.runOnUiThread(() -> webView.evaluateJavascript(js, null));
         } catch (Exception e) {
           Log.e(_TAG, "extLoadVideo error: " + e.getMessage());
+          String emsg = e.getMessage() != null ? e.getMessage() : e.getClass().getSimpleName();
           final String js = "__EXT_DISPATCH(" + cbId + "," +
               JSONObject.quote("{\"status\":false,\"error\":\"" +
-              e.getMessage().replace("\"", "\\\"") + "\"}") + ");";
+              emsg.replace("\"", "\\\"") + "\"}") + ");";
           activity.runOnUiThread(() -> webView.evaluateJavascript(js, null));
         }
       });

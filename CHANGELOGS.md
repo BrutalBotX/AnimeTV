@@ -1,4 +1,18 @@
 # Changelogs
+- **6.1.2** 🛠️
+  - **Fix video stuck on "STREAMING VIDEO" once and for all**
+    - ExoPlayer errors are now detected and reported (previously silent forever)
+    - Bridge probes every stream URL before returning — dead links never reach the player
+    - Embed/HTML-page "streams" that ExoPlayer can never play are filtered out
+    - Providers serving only dead streams are skipped automatically
+    - Automatic failover to the next stream when one fails mid-start
+    - 25-second watchdog with clear error instead of infinite loading
+  - **Fix descriptions/genres randomly not loading**
+    - Repaired broken AniList retry handler that corrupted detail data
+    - Detail page now has 3 independent load paths: bridge → AniList GraphQL → homepage cache
+    - Fixed callback never firing when a bridge error had no message
+  - **Fixes**
+    - Stale referer from a previous video no longer leaks into the next one
 - **6.0.0** 🔥
   - **Complete streaming backend rebuild**
     - Removed all 8 dead sources (AnimeKAI, Anix, Hianime, Aniwatch, Animeflix, KickAss, Gojo, Miruro)

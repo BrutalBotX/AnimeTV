@@ -1546,25 +1546,54 @@ var anikage={
         });
       }
       else{
-        // Bridge failed — fallback to _MAL.aldata cache
-        var key="anilistmedia_"+slug;
-        var cached=_MAL&&_MAL.aldata&&_MAL.aldata[key];
-        if (cached){
-          var epCount=cached.episodes||0;
-          var actualEpCount=epCount>0?epCount:1;
-          var episodes=[];
-          for(var i=0;i<actualEpCount&&i<2000;i++){
-            episodes.push({ep:i+1,url:slug+'#'+(i+1),active:clickedEp?((i+1)==clickedEp):(i==0),title:'Episode '+(i+1),title_jp:'',dub:false,filler:false,token:'',epuri:slug+'#'+(i+1)});
-          }
-          var genreArr=[];
-          if(cached.genres)for(var jj=0;jj<cached.genres.length;jj++){genreArr.push({name:cached.genres[jj],val:'_'+cached.genres[jj].toUpperCase().replace(/ /g,'_')});}
-          f({status:true,title:cached.title.english||cached.title.romaji,title_jp:cached.title.romaji,synopsis:'',poster:cached.coverImage?(cached.coverImage.large||cached.coverImage.medium):'',banner:'',url:slug,ttid:slug,idMal:0,epactive:0,quality:null,genre:(cached.genres||[]).join(', '),ep:episodes,epavail:actualEpCount,epdub:actualEpCount,genres:genreArr,type:cached.format||'TV',rating:'',streamtype:'sub',servers:{sub:[{n:"Bonk",p:0},{n:"Kiwi",p:1},{n:"Pewe",p:2},{n:"Bee",p:3},{n:"Ally",p:4},{n:"Moo",p:5},{n:"Hop",p:6},{n:"Senshi",p:7},{n:"Anikoto",p:8},{n:"AniBD",p:9},{n:"AniZone",p:10},{n:"AniNeko",p:11},{n:"AnimeGG",p:12},{n:"ReAnime",p:13},{n:"2DHive",p:14},{n:"AnimeKai",p:15}],dub:[],softsub:[]},stream_url:{sub:'',dub:'',softsub:''},stream_vurl:'',skip:[[0,0],[0,0]],related:[],seasons:[],recs:[],info:{type:{val:'_'+(cached.format||'TV').toUpperCase(),name:(cached.format||'TV').toUpperCase()},rating:'',quality:null}});
-        }
-        else{
-          f({status:false});
-        }
+        // Bridge failed — try WebView-network AniList fetch, then cache
+        anikage.getViewAlreq(slug,clickedEp,f);
       }
     }));
+  },
+  getViewAlreq:function(slug, clickedEp, f){
+    _MAL.alreq('query($id:Int){Media(id:$id,type:ANIME){id idMal title{romaji english} description(asHtml:false) genres bannerImage coverImage{large extraLarge} episodes format status averageScore nextAiringEpisode{episode}}}',
+      {id:toInt(slug)},function(v){
+      var m=v&&v.data&&v.data.Media;
+      if (!m){
+        anikage.getViewCache(slug,clickedEp,f);
+        return;
+      }
+      var genres=m.genres||[];
+      var genreArr=[];
+      for (var j=0;j<genres.length;j++){ genreArr.push({name:genres[j],val:'_'+(''+genres[j]).toUpperCase().replace(/ /g,'_')}); }
+      var epCount=m.episodes||((m.nextAiringEpisode&&m.nextAiringEpisode.episode)?m.nextAiringEpisode.episode-1:0);
+      var actualEpCount=epCount>0?epCount:1;
+      var episodes=[];
+      for (var i=0;i<actualEpCount&&i<2000;i++){
+        episodes.push({ep:i+1,url:slug+'#'+(i+1),active:clickedEp?((i+1)==clickedEp):(i==0),title:'Episode '+(i+1),title_jp:'',dub:false,filler:false,token:'',epuri:slug+'#'+(i+1)});
+      }
+      f({status:true,title:m.title?(m.title.english||m.title.romaji||''):'',title_jp:m.title?(m.title.romaji||''):'',
+        synopsis:m.description||'',poster:m.coverImage?(m.coverImage.extraLarge||m.coverImage.large||''):'',banner:m.bannerImage||'',
+        url:slug,ttid:slug,idMal:m.idMal||0,epactive:0,quality:null,genre:genres.join(', '),
+        ep:episodes,epavail:actualEpCount,epdub:actualEpCount,genres:genreArr,type:m.format||'TV',rating:'',streamtype:'sub',
+        servers:{sub:[{n:"Bonk",p:0},{n:"Kiwi",p:1},{n:"Pewe",p:2},{n:"Bee",p:3},{n:"Ally",p:4},{n:"Moo",p:5},{n:"Hop",p:6},{n:"Senshi",p:7},{n:"Anikoto",p:8},{n:"AniBD",p:9},{n:"AniZone",p:10},{n:"AniNeko",p:11},{n:"AnimeGG",p:12},{n:"ReAnime",p:13},{n:"2DHive",p:14},{n:"AnimeKai",p:15}],dub:[],softsub:[]},
+        stream_url:{sub:'',dub:'',softsub:''},stream_vurl:'',skip:[[0,0],[0,0]],related:[],seasons:[],recs:[],
+        info:{type:{val:'_'+((m.format||'TV')+'').toUpperCase(),name:((m.format||'TV')+'').toUpperCase()},rating:'',quality:null}});
+    },true);
+  },
+  getViewCache:function(slug, clickedEp, f){
+    var key="anilistmedia_"+slug;
+    var cached=_MAL&&_MAL.aldata&&_MAL.aldata[key];
+    if (cached){
+      var epCount=cached.episodes||0;
+      var actualEpCount=epCount>0?epCount:1;
+      var episodes=[];
+      for(var i=0;i<actualEpCount&&i<2000;i++){
+        episodes.push({ep:i+1,url:slug+'#'+(i+1),active:clickedEp?((i+1)==clickedEp):(i==0),title:'Episode '+(i+1),title_jp:'',dub:false,filler:false,token:'',epuri:slug+'#'+(i+1)});
+      }
+      var genreArr=[];
+      if(cached.genres)for(var jj=0;jj<cached.genres.length;jj++){genreArr.push({name:cached.genres[jj],val:'_'+cached.genres[jj].toUpperCase().replace(/ /g,'_')});}
+      f({status:true,title:cached.title.english||cached.title.romaji,title_jp:cached.title.romaji,synopsis:'',poster:cached.coverImage?(cached.coverImage.large||cached.coverImage.medium):'',banner:'',url:slug,ttid:slug,idMal:0,epactive:0,quality:null,genre:(cached.genres||[]).join(', '),ep:episodes,epavail:actualEpCount,epdub:actualEpCount,genres:genreArr,type:cached.format||'TV',rating:'',streamtype:'sub',servers:{sub:[{n:"Bonk",p:0},{n:"Kiwi",p:1},{n:"Pewe",p:2},{n:"Bee",p:3},{n:"Ally",p:4},{n:"Moo",p:5},{n:"Hop",p:6},{n:"Senshi",p:7},{n:"Anikoto",p:8},{n:"AniBD",p:9},{n:"AniZone",p:10},{n:"AniNeko",p:11},{n:"AnimeGG",p:12},{n:"ReAnime",p:13},{n:"2DHive",p:14},{n:"AnimeKai",p:15}],dub:[],softsub:[]},stream_url:{sub:'',dub:'',softsub:''},stream_vurl:'',skip:[[0,0],[0,0]],related:[],seasons:[],recs:[],info:{type:{val:'_'+(cached.format||'TV').toUpperCase(),name:(cached.format||'TV').toUpperCase()},rating:'',quality:null}});
+    }
+    else{
+      f({status:false});
+    }
   },
   loadVideo:function(dt,cb){
     var url=dt.url;
@@ -6286,6 +6315,16 @@ const _API={
       body.classList.remove('playback_on_video');
       _API.vidInterval=setInterval(function(){
         if (!initialized){
+          if (_JSAPI.videoIsError && _JSAPI.videoIsError()){
+            console.log("ANILILI native video error: "+(_JSAPI.videoGetError?_JSAPI.videoGetError():""));
+            clearInterval(_API.vidInterval);
+            _API.vidInterval=null;
+            if (_API.vidStartTimeout){ clearTimeout(_API.vidStartTimeout); _API.vidStartTimeout=null; }
+            body.classList.remove('playback_on_video');
+            _API.videoSetUrl("");
+            cb('error','native_error');
+            return;
+          }
           if (_JSAPI.videoIsPlaying()&&_JSAPI.videoGetDuration()>0){
             body.classList.add('playback_on_video');
             initialized=true;
@@ -6327,6 +6366,18 @@ const _API={
           }
         }
       },50);
+      _API.vidStartTimeout=setTimeout(function(){
+        _API.vidStartTimeout=null;
+        if (!initialized){
+          console.log("ANILILI video start timeout (25s)");
+          clearInterval(_API.vidInterval);
+          _API.vidInterval=null;
+          body.classList.remove('playback_on_video');
+          _API.videoSetUrl("");
+          _API.showToast("Video failed to start. Try another episode.");
+          cb('error','video_start_timeout');
+        }
+      },25000);
     }
     else{
       body.classList.remove('playback_on_video');
@@ -8505,6 +8556,21 @@ const pb={
       // _API.showToast("Got MediaInfo Event");
       window.__M3U8CB(v);
     }
+    else if (c=='error'){
+      /* Stream failed — try next source if available */
+      if (pb.video_src_list && pb.video_src_idx<pb.video_src_list.length-1){
+        pb.video_src_idx++;
+        var nx=pb.video_src_list[pb.video_src_idx];
+        console.log("ANILILI failover: source "+(pb.video_src_idx+1)+"/"+pb.video_src_list.length+" -> "+nx.file);
+        _API.showToast("Stream failed, trying next source...");
+        try{ _JSAPI.videoSetReferer(nx.referer||""); }catch(e){}
+        pb.init_video_mp4upload(nx.file);
+      }
+      else{
+        pb.video_src_list=null;
+        pb.playback_error('PLAYBACK ERROR',"Video failed to play.\nAll available sources failed. Try another episode.");
+      }
+    }
     else if (c=='complete'){
       if (pb.pb_track_ctl.innerHTML!='replay'){
         vtt.playback.buffering_set(false);
@@ -9383,11 +9449,10 @@ const pb={
             }catch(e){}
             pb.updateStreamTypeInfo();
             if (v.sources && v.sources.length>0){
-              if (v.sources[0].referer && _JSAPI.videoSetReferer){
-                _JSAPI.videoSetReferer(v.sources[0].referer);
-                console.log("ANILILI set referer: "+v.sources[0].referer);
-              }
-              console.log("ANILILI playing: "+v.sources[0].file);
+              pb.video_src_list=v.sources;
+              pb.video_src_idx=0;
+              try{ _JSAPI.videoSetReferer(v.sources[0].referer||""); }catch(e){}
+              console.log("ANILILI playing: "+v.sources[0].file+" ("+v.sources.length+" source(s) available)");
               pb.init_video_mp4upload(v.sources[0].file);
             }
             else{
@@ -18481,16 +18546,8 @@ const _MAL={
             if (retry<4){
               setTimeout(function(){
                 _MAL.alreq(q,vars,cb,notoken,retry+1);
-      },50);
-      _API.vidStartTimeout=setTimeout(function(){
-        if (!initialized){
-          console.log("ANILILI video start timeout (25s)");
-          body.classList.remove('playback_on_video');
-          _API.showToast("Video failed to start. Try a different mirror or episode.");
-          cb('error','video_start_timeout');
-        }
-      },25000);
-    }
+              },50);
+            }
             else{
               try{
                 cb(null);

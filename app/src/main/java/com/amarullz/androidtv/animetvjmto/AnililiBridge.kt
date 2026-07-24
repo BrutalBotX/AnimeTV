@@ -5,6 +5,8 @@ import com.miruronative.data.ProviderCatalog
 import com.miruronative.data.remote.AniListClient
 import com.miruronative.data.remote.AnivexaClient
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
@@ -13,6 +15,7 @@ import kotlinx.serialization.json.Json
 import okhttp3.Cache
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.dnsoverhttps.DnsOverHttps
 import org.json.JSONArray
 import org.json.JSONObject
@@ -54,6 +57,53 @@ object AnililiBridge {
     private val aniList: AniListClient by lazy { AniListClient(client, json) }
     private val anivexa: AnivexaClient by lazy { AnivexaClient(client, json, aniList) }
     private val mediaCache = HashMap<Int, com.miruronative.data.model.Media>()
+
+    /** Short-timeout client for stream reachability checks. */
+    private val probeClient: OkHttpClient by lazy {
+        client.newBuilder()
+            .connectTimeout(6, TimeUnit.SECONDS)
+            .readTimeout(8, TimeUnit.SECONDS)
+            .callTimeout(10, TimeUnit.SECONDS)
+            .build()
+    }
+
+    /**
+     * Probe a stream URL the same way ExoPlayer will fetch it.
+     * Returns true when the server answers 2xx with the provider's headers.
+     */
+    private fun probeStream(url: String, referer: String?): Boolean {
+        return try {
+            val rb = Request.Builder()
+                .url(url)
+                .header("User-Agent", Conf.USER_AGENT)
+                .header("Range", "bytes=0-0")
+                .header("Accept", "*/*")
+            if (!referer.isNullOrEmpty()) {
+                rb.header("Referer", referer)
+                rb.header("Origin", referer)
+            }
+            probeClient.newCall(rb.build()).execute().use { resp ->
+                Log.d(TAG, "  probe ${resp.code} <- ${url.take(90)}")
+                resp.isSuccessful
+            }
+        } catch (e: Exception) {
+            Log.d(TAG, "  probe FAIL (${e.javaClass.simpleName}: ${e.message}) <- ${url.take(90)}")
+            false
+        }
+    }
+
+    /** Keep only streams that actually respond; probes run in parallel. */
+    private suspend fun filterPlayable(
+        streams: List<com.miruronative.data.model.StreamItem>
+    ): List<com.miruronative.data.model.StreamItem> {
+        // Embed URLs are HTML pages, not media — ExoPlayer can never play them.
+        val direct = streams.filter { !it.isEmbed }
+        return kotlinx.coroutines.coroutineScope {
+            direct.take(6).map { s ->
+                async(Dispatchers.IO) { if (probeStream(s.url, s.referer)) s else null }
+            }.awaitAll().filterNotNull()
+        }
+    }
 
     private fun media(id: Int): com.miruronative.data.model.Media? {
         return mediaCache[id] ?: runBlocking {
@@ -225,8 +275,20 @@ object AnililiBridge {
             }
             val sources = result.getOrNull()
             if (sources != null && sources.streams.isNotEmpty()) {
-                Log.d(TAG, "  $provider: OK - ${sources.streams.size} stream(s)")
-                return@runBlocking buildSourceJson(sources)
+                Log.d(TAG, "  $provider: ${sources.streams.size} stream(s) resolved, probing...")
+                val playable = try {
+                    withTimeout(15000) { filterPlayable(sources.streams) }
+                } catch (e: Exception) {
+                    Log.w(TAG, "  $provider: probe interrupted (${e.javaClass.simpleName})")
+                    emptyList()
+                }
+                if (playable.isNotEmpty()) {
+                    Log.d(TAG, "  $provider: OK - ${playable.size} playable stream(s)")
+                    return@runBlocking buildSourceJson(sources, playable)
+                }
+                Log.w(TAG, "  $provider: all streams failed probe, trying next provider")
+                errors.add("$provider(dead-streams)")
+                continue
             }
             Log.d(TAG, "  $provider: no streams")
             errors.add("$provider(empty)")
@@ -235,10 +297,13 @@ object AnililiBridge {
         """{"status":false,"error":"No sources. Tried: ${errors.joinToString(", ")}"}"""
     }
 
-    private fun buildSourceJson(result: com.miruronative.data.model.SourcesResult): String {
+    private fun buildSourceJson(
+        result: com.miruronative.data.model.SourcesResult,
+        streams: List<com.miruronative.data.model.StreamItem> = result.streams
+    ): String {
         val out = JSONObject()
         val sources = JSONArray()
-        for (stream in result.streams) {
+        for (stream in streams) {
             val src = JSONObject()
             src.put("file", stream.url)
             src.put("quality", stream.quality ?: "auto")

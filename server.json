@@ -8,17 +8,17 @@
   "stream_domain2": "megaf.cc",
   "update": "1.1-240624",
 
-  "appnum": 611,
-  "appver": "6.1.1",
+  "appnum": 612,
+  "appver": "6.1.2",
   "appsize": "6.15 MB",
-  "appurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/6.1.1/animetv-6.1.1.apk",
+  "appurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/6.1.2/animetv-6.1.2.apk",
   "appnote": 
-    "- Fix HTML tags visible in anime descriptions (broken synopsis rendering)\n- Fix video stuck on streaming video: emergency AniList fetch when cache cold\n- Fix referer headers not applied to HLS streams\n- Add 25s timeout for video loading with error toast\n- Improve provider fallback when idMal missing",
+    "- Fix video stuck on STREAMING VIDEO: player errors now detected, dead streams probed & skipped, auto-failover to next stream\n- Fix descriptions/genres randomly not loading: repaired AniList retry, added 3 fallback load paths\n- Embed streams ExoPlayer can't play are filtered out\n- Stale referer no longer leaks between videos",
   
-  "pcnum": 611,
-  "pcver": "6.1.1",
+  "pcnum": 612,
+  "pcver": "6.1.2",
   "pcsize": "0 MB",
-  "pcurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/6.1.1/animetv-6.1.1.asar.gz",
+  "pcurl": "https://github.com/BrutalBotX/AnimeTV/releases/download/6.1.2/animetv-6.1.2.asar.gz",
   "pcnote": 
-    "- Fix HTML tags visible in anime descriptions (broken synopsis rendering)\n- Fix video stuck on streaming video: emergency AniList fetch when cache cold\n- Fix referer headers not applied to HLS streams\n- Add 25s timeout for video loading with error toast\n- Improve provider fallback when idMal missing"
+    "- Fix video stuck on STREAMING VIDEO: player errors now detected, dead streams probed & skipped, auto-failover to next stream\n- Fix descriptions/genres randomly not loading: repaired AniList retry, added 3 fallback load paths\n- Embed streams ExoPlayer can't play are filtered out\n- Stale referer no longer leaks between videos"
 }
